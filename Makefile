@@ -1,7 +1,8 @@
 NAME=stdpath
 RM := rm
+MV := mv
 DCC := dmd
-DFLAGS += #-O -release -inline -boundscheck=off
+DFLAGS +=
 LIBS =
 SOURCEDIR = src
 BUILDDIR = build
@@ -12,6 +13,10 @@ OBJS = $(addprefix $(BUILDDIR)/,$(SRC_BASE:%.d=%.o))
 
 all: $(OBJS)
 	$(DCC) $(DFLAGS) -of=$(BIN)/$(NAME) $(OBJS)
+
+install:
+	$(DCC) $(DFLAGS) -O -release -inline -boundscheck=off -of=$(BIN)/$(NAME)-release $(SRC)
+	$(MV) $(BIN)/$(NAME)-release /usr/bin
 
 dbg:
 	$(DCC) $(DFLAGS) -of=$(BIN)/$(NAME) $(OBJS)
