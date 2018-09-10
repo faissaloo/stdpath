@@ -14,17 +14,17 @@ string paths_to_csl(string paths)
 	auto remove_trailing_regex = ctRegex!(r"[:\/\s]$");
 
 	string csl_paths = paths;
-	csl_paths = replaceAll(csl_paths, to_csl_regex, ":");
-	csl_paths = replaceAll(csl_paths, tilde_expand_regex, expandTilde("~"));
-	csl_paths = replaceAll(csl_paths, ignore_multislash_regex, "/");
-	csl_paths = replaceAll(csl_paths, remove_trailing_regex, "");
+	csl_paths = csl_paths.replaceAll(to_csl_regex, ":");
+	csl_paths = csl_paths.replaceAll(tilde_expand_regex, "~".expandTilde());
+	csl_paths = csl_paths.replaceAll(ignore_multislash_regex, "/");
+	csl_paths = csl_paths.replaceAll(remove_trailing_regex, "");
 
 	return csl_paths;
 }
 
 void main()
 {
-	string path_file = expandTilde("~/.path");
+	string path_file = "~/.path".expandTilde();
 
 	if (exists(path_file))
 	{
@@ -37,7 +37,7 @@ void main()
 unittest
 {
 	writeln("Tilde expansion:");
-	assert(paths_to_csl("~/android") == expandTilde("~/android"));
+	assert(paths_to_csl("~/android") == "~/android".expandTilde());
 	writeln("Passed");
 }
 

@@ -11,8 +11,10 @@ SRC_BASE = $(notdir $(SRC))
 OBJS = $(addprefix $(BUILDDIR)/,$(SRC_BASE:%.d=%.o))
 
 all: $(OBJS)
-	$(DCC) $(DFLAGS) -of=$(BIN)/$(NAME) $(OBJS)
+	$(DCC) $(DFLAGS) -O -release -inline -boundscheck=off -of=$(BIN)/$(NAME) $(OBJS)
 
+dbg:
+	$(DCC) $(DFLAGS) -of=$(BIN)/$(NAME) $(OBJS)
 test:
 	$(DCC) $(DFLAGS) -unittest -run $(SRC)
 
